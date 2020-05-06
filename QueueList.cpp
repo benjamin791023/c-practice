@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "que_list"
 
 struct queuenode{
 	int data;
