@@ -59,7 +59,7 @@ int getback(queuelist *list){
 	return list->back->ind;
 }
 
-void bfs(int **adjlist, int start){
+void bfs(int **adjlist, int start, int *sizea){
 	int color[num_vertex];
 	int predecessor[num_vertex];
 	int distance[num_vertex];
@@ -82,13 +82,14 @@ void bfs(int **adjlist, int start){
 			while (!isempty(q)){
 				int u = getfront(q);
 				printf("aa%d\t", u);
-				printf("size%d\n", sizeof(adjlist));
-				for (int k=0; k<sizeof(adjlist[u]) / sizeof(int); k++){
-					printf("%d", adjlist[u][k]);
+				printf("size%d\n", sizea[u]);
+				for (int k=0; k<sizea[u]; k++){
+					printf("value %d\t", adjlist[u][k]);
 					if (color[adjlist[u][k]] == 0){
 						color[adjlist[u][k]] = 1;
 						distance[adjlist[u][k]] = distance[u] + 1;
 						predecessor[adjlist[u][k]] = u;
+						printf("pred %d, dis %d ", predecessor[adjlist[u][k]], distance[adjlist[u][k]]);
 						push(q, adjlist[u][k]);
 					}
 				}
@@ -103,11 +104,16 @@ void bfs(int **adjlist, int start){
 	for (int i=0; i<num_vertex; i++){
 		printf("%d", predecessor[i]);
 	}
+	printf("\n");
+	for (int i=0; i<num_vertex; i++){
+		printf("%d", distance[i]);
+	}
 }
 
 
 int main(){
 	int **adjlist = (int **)malloc(sizeof(int *) * 9);
+	int sizea[] = {3, 2, 5, 2, 3, 3, 3, 3, 2};
 	int a[3] = {1,2,3};
 	adjlist[0] = (int *)a;
 	int b[2] = {0, 4};
@@ -126,9 +132,8 @@ int main(){
 	adjlist[7] = (int *)h;
 	int i[2] = {5, 6};
 	adjlist[8] = (int *)i;
-	printf("%d\n",sizeof(adjlist));
 	
-	bfs(adjlist, 0);
+	bfs(adjlist, 0, sizea);
 	
 	return 0;
 }
